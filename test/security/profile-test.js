@@ -181,10 +181,16 @@ test.describe(zapTargetAppRoute + " regression test suite", function() {
                 });
             },
             function setForcedUser(setForcedUserDone) {
-                zaproxy.forcedUser.setForcedUser(contextId, userId, zapApiKey, function(err, resp) {
-                    setForcedUserDone(state.error);
-                });
-            },
+                try {                
+                                zaproxy.forcedUser.setForcedUser(contextId, userId, zapApiKey, function(err, resp) {
+                                    setForcedUserDone(state.error);
+                                });
+                            
+                } catch (error) {
+                  console.error("Error occurred in operation:", error);
+                  throw error;
+                }
+},
             function setAuthenticationCredentials(setAuthenticationCredentialsDone) {
                 zaproxy.users.setAuthenticationCredentials(
                     contextId,
